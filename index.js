@@ -39,7 +39,7 @@ client.on('message', async message => {
       const embed = createEmbed(matchStats, team);
       message.channel.send({ embed });
     } catch (error) {
-      message.channel.send(
+      message.reply(
         'Error fetching stats, has this match been scheduled?',
       );
     }
