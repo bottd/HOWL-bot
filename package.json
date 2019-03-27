@@ -13,6 +13,7 @@
   "dependencies": {
     "discord.js": "^11.4.2",
     "dotenv": "^7.0.0",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "puppeteer": "^1.13.0"
   }
 }
