@@ -10,13 +10,14 @@ async function getRosters(team, round) {
     await page.waitForSelector('td.td-match-number');
 
     const matchSelector = await page.evaluate(team => {
-      const teams = document.querySelectorAll('div.team-name');
+      const teamsTop = document.querySelectorAll('div.team-name');
+      const teamsBottom = document.querySelectorAll('div.team-name-bottom');
       let matchSelector = '';
-      for (let i = 0; i < teams.length; i++) {
-        if (teams[i].innerText.trim() === team) {
-          matchSelector = teams[i].parentElement.parentElement.classList[1];
+      [...teamsTop, ...teamsBottom].forEach(element => {
+        if (element.innerText === team) {
+          matchSelector = element.parentElement.parentElement.classList[1];
         }
-      }
+      });
       return matchSelector;
     }, team);
 
@@ -30,18 +31,22 @@ async function getRosters(team, round) {
       const headers = document.querySelectorAll('h4');
       for (let i = 0; i < headers.length; i++) {
         let text = headers[i].innerText;
-        if (text !== team && text !== "Delete Tournament") {
-          rosterElements = headers[i].parentElement.parentElement.querySelectorAll('td.player-in-game-name');
+        if (text !== team && text !== 'Delete Tournament') {
+          rosterElements = headers[
+            i
+          ].parentElement.parentElement.querySelectorAll(
+            'td.player-in-game-name',
+          );
           break;
         }
       }
       return [...rosterElements].map(player => player.innerText);
     }, team);
-    await browser.close();
+    //    await browser.close();
     return roster;
   } catch (error) {
     console.log(error);
   }
 }
 
-module.exports = { getRosters }
+module.exports = { getRosters };
