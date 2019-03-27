@@ -39,7 +39,9 @@ client.on('message', async message => {
       const embed = createEmbed(matchStats, team);
       message.channel.send({ embed });
     } catch (error) {
-      console.log(error);
+      message.channel.send(
+        'Error fetching stats, has this match been scheduled?',
+      );
     }
   }
 });
@@ -52,11 +54,16 @@ function checkMessageCategory(message) {
 function createEmbed(stats, team) {
   const embed = new Discord.RichEmbed()
     .setTitle(`${team} match #${stats.round} vs. ${stats.name}`)
-    .setColor(0x00AE86)
-    .setThumbnail('https://cdn.discordapp.com/attachments/546536122407190530/546536510309269514/artboard_1.png')
-  console.log(stats.roster);
+    .setDescription(`Match schedueled for ${stats.date} PST`)
+    .setColor(0x00ae86)
+    .setThumbnail(
+      'https://cdn.discordapp.com/attachments/546536122407190530/546536510309269514/artboard_1.png',
+    );
   stats.roster.forEach(player => {
-    embed.addField(player.player, `SR: ${player.rating}`);
+    if (player.player.split(' ').length === 2) {
+      player.player = `*${player.player}`;
+    }
+    embed.addField(player.player, `SR: ${player.rating}`, true);
   });
   return embed;
 }
