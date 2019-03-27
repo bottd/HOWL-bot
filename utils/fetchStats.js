@@ -12,3 +12,5 @@ function fetchTeamStats(team) {
     };
   });
 }
+
+module.exports = { fetchTeamStats };
