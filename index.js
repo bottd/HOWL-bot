@@ -1,6 +1,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const scraper = require('./utils/scraper');
 
 const teams = {
   '5280 ELITE': '5280 Elite',
@@ -16,17 +17,21 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', message => {
+client.on('message', async message => {
   if (message.author === client.user) {
     return;
   }
   if (message.content.startsWith('!OD matchup') && checkMessageCategory(message)) {
-    const week = message.content.split(' ')[2];
-    if (!parseInt(week)) {
+    const round = message.content.split(' ')[2];
+    if (!parseInt(round)) {
       message.reply('Matchup count must be a number, try again!');
       return;
     }
-    message.channel.send(`OPEN DIV STATS ${week}`);
+    const roster = await scraper.getRosters(
+      teams[message.channel.parent.name.toUpperCase()],
+      round,
+    );
+    message.channel.send(`OPEN DIV STATS ${roster}`);
   }
 });
 
