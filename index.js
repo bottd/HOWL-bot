@@ -61,7 +61,7 @@ function createEmbed(stats, team) {
     );
   stats.roster.forEach(player => {
     if (player.player.split(' ').length === 2) {
-      player.player = `*${player.player}`;
+      player.player = `*${player.player.split(' ')[0]}`;
     }
     embed.addField(player.player, `SR: ${player.rating}`, true);
   });
