@@ -3,12 +3,15 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 client.on('ready', () => {
-  console.log('I am ready!');
+  console.log(`Logged in as ${client.user.tag}!`);
 });
 
 client.on('message', message => {
-  if (message.content.startsWith('ping')) {
-    message.channel.send('pong!');
+  if (message.author === client.user) {
+    return;
+  }
+  if (message.content === "!OD matchup") {
+    message.channel.send("OPEN DIV STATS");
   }
 });
 
