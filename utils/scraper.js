@@ -9,24 +9,37 @@ async function getRosters(team, round) {
     );
     await page.waitForSelector('td.td-match-number');
 
-    const matchSelector = await page.evaluate(team => {
+    const matchData = await page.evaluate(team => {
+      let tableRow;
       const teamsTop = document.querySelectorAll('div.team-name');
       const teamsBottom = document.querySelectorAll('div.team-name-bottom');
-      let matchSelector = '';
+      let selector = '';
       [...teamsTop, ...teamsBottom].forEach(element => {
         if (element.innerText === team) {
-          matchSelector = element.parentElement.parentElement.classList[1];
+          selector = element.parentElement.parentElement.classList[1];
+          tableRow = element.parentElement.parentElement;
         }
       });
-      return matchSelector;
+      const date = tableRow.children[1].innerText.split(' ')[0];
+      let enemyName;
+      if (tableRow.children[3].innerText !== team) {
+        enemyName = tableRow.children[3].innerText;
+      } else if (tableRow.children[5].innerText !== team) {
+        enemyName = tableRow.children[5].innerText;
+      }
+      return {
+        date,
+        name: enemyName,
+        selector,
+      };
     }, team);
 
-    if (!matchSelector) {
-      return [];
+    if (!matchData.selector) {
+      return {};
     }
-    await page.click(`.${matchSelector}`);
+    await page.click(`.${matchData.selector}`);
     await page.waitForSelector('span.team-name');
-    const roster = await page.evaluate(team => {
+    matchData.roster = await page.evaluate(team => {
       let rosterElements;
       const headers = document.querySelectorAll('h4');
       for (let i = 0; i < headers.length; i++) {
@@ -42,8 +55,9 @@ async function getRosters(team, round) {
       }
       return [...rosterElements].map(player => player.innerText);
     }, team);
-    //    await browser.close();
-    return roster;
+    await browser.close();
+    delete matchData.selector;
+    return matchData;
   } catch (error) {
     console.log(error);
   }
