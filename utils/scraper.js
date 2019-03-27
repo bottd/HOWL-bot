@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 
 async function getRosters(team, round) {
   try {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(
       `https://battlefy.com/overwatch-open-division-north-america/2019-overwatch-open-division-season-2-north-america/5c7ccfe88d004d0345bbd0cd/stage/5c929d720bc67d0345180aa6/bracket/${round}`,
@@ -19,6 +19,10 @@ async function getRosters(team, round) {
       }
       return matchSelector;
     }, team);
+
+    if (!matchSelector) {
+      return [];
+    }
     await page.click(`.${matchSelector}`);
     await page.waitForSelector('span.team-name');
     const roster = await page.evaluate(team => {
@@ -40,4 +44,4 @@ async function getRosters(team, round) {
   }
 }
 
-getRosters('5280 Elite', 4);
+module.exports = { getRosters }
