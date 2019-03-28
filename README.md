@@ -1,6 +1,11 @@
 # HOWL Bot
 <img src="https://github.com/bottd/HOWL-bot/blob/master/images/logo.png" alt="HOWL logo" width="200px" height="200px">
-A Discord bot for the Coloraod HOWL Discord server, serving 800+ members and growing!
+
+## [Join the server here!](https://discordapp.com/invite/UDqxX8b "Colorado HOWL Discord invite link")
+
+A Discord bot for the Coloraod HOWL Discord server, serving 800+ members and growing!  Howl bot is built in Node.js and uses Puppeteer for web scraping information.  More features coming soon, and we are always open to new suggestions!
+
+
 
 ## Commands
 
