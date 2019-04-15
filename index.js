@@ -2,6 +2,7 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const scraper = require('./utils/scraper');
+const { startPizzaOrder } = require('./utils/pizza');
 const { fetchTeamStats } = require('./utils/fetchStats');
 
 const teams = {
@@ -22,6 +23,9 @@ client.on('message', async message => {
   if (message.author === client.user) {
     return;
   }
+  if (message.content === '!pizza' && message.channel.type === 'dm') {
+    startPizzaOrder(message.author, message.channel);
+  }
   if (
     message.content.startsWith('!OD matchup') &&
     checkMessageCategory(message)
@@ -39,9 +43,7 @@ client.on('message', async message => {
       const embed = createEmbed(matchStats, team);
       message.channel.send({ embed });
     } catch (error) {
-      message.reply(
-        'Error fetching stats, has this match been scheduled?',
-      );
+      message.reply('Error fetching stats, has this match been scheduled?');
     }
   }
 });
