@@ -26,7 +26,20 @@ client.on('message', async message => {
   if (message.content === '!pizza' && message.channel.type === 'dm') {
     startPizzaOrder(message.author, message.channel);
   }
-  if (message.content === '!OD maps') {
+  if (message.content.startsWith('!OD settings')) {
+    const embed = new Discord.RichEmbed()
+      .setColor(0x00ae86)
+      .setThumbnail(
+        'https://cdn.discordapp.com/attachments/546536122407190530/546536510309269514/artboard_1.png',
+      )
+      .addField(
+        'Open Division Lobby Rules',
+        'Presets: Competitive \nModes, All: Kill Cam Disabled \nModes, All: Skins Disabled \nModes, All: Game Mode Start – Manual \nLobby: Max Spectators 0 (unless spectators have been permitted by both Team Captains in writing before start of play) \nHeroes, Hero Roster: Disable any heroes not currently available in Competitive Play \n“Invite Only” must be selected within the Custom Game Lobby.',
+      )
+      .setFooter('Message @Landis#0870 with any questions or issues');
+    message.channel.send({ embed });
+  }
+  if (message.content.startsWith('!OD maps')) {
     const embed = new Discord.RichEmbed()
       .setTitle('Open Division Season 2 Map Pool')
       .setColor(0x00ae86)
