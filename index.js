@@ -26,6 +26,24 @@ client.on('message', async message => {
   if (message.content === '!pizza' && message.channel.type === 'dm') {
     startPizzaOrder(message.author, message.channel);
   }
+  if (message.content === '!OD maps') {
+    const embed = new Discord.RichEmbed()
+      .setTitle('Open Division Season 2 Map Pool')
+      .setColor(0x00ae86)
+      .setThumbnail(
+        'https://cdn.discordapp.com/attachments/546536122407190530/546536510309269514/artboard_1.png',
+      )
+      .setFooter('Message @Landis#0870 with any questions or issues')
+      .addField('1: Control', 'Lijang Tower, Nepal, Oasis')
+      .addField('2: Hybrid', 'Hollywood, Numbani, Eichenwalde')
+      .addField('3: Assault', 'Paris, Hanamura, Temple of Anubis')
+      .addField('4: Escort', 'Watchpoint: Gibraltar, Junkertown, Dorado')
+      .addField(
+        '5: Control',
+        'Losing team from Map 4 picks from the 2 remaining available Control maps',
+      );
+    message.channel.send({ embed });
+  }
   if (
     message.content.startsWith('!OD matchup') &&
     checkMessageCategory(message)
