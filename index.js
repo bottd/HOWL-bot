@@ -43,6 +43,7 @@ client.on('message', async message => {
       const embed = createEmbed(matchStats, team);
       message.channel.send({ embed });
     } catch (error) {
+      console.log(error.message);
       message.reply('Error fetching stats, has this match been scheduled?');
     }
   }
@@ -54,19 +55,31 @@ function checkMessageCategory(message) {
 }
 
 function createEmbed(stats, team) {
+  let sum = 0;
+  let count = 0;
   const embed = new Discord.RichEmbed()
     .setTitle(`${team} match #${stats.round} vs. ${stats.name}`)
-    .setDescription(`Match schedueled for ${stats.date} PST`)
+    .setDescription(`Match schedueled for ${stats.date}`)
     .setColor(0x00ae86)
     .setThumbnail(
       'https://cdn.discordapp.com/attachments/546536122407190530/546536510309269514/artboard_1.png',
-    );
+    )
+    .setFooter('Message @Landis#0870 with any questions or issues');
   stats.roster.forEach(player => {
+    if (parseInt(player.rating)) {
+      sum += parseInt(player.rating);
+      count += 1;
+    }
     if (player.player.split(' ').length === 2) {
       player.player = `*${player.player.split(' ')[0]}`;
     }
     embed.addField(player.player, `SR: ${player.rating}`, true);
   });
+  embed
+    .addBlankField()
+    .addField('Average SR', `${sum / count || 'Unknown'}`)
+    .setTimestamp();
+
   return embed;
 }
 
