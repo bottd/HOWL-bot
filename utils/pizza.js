@@ -63,7 +63,7 @@ function sendStoreInfo(channel, store) {
   const embed = new Discord.RichEmbed()
     .setTitle(`Dominos: ${store.StreetName}`)
     .setDescription(`Phone: ${store.Phone}`)
-    .addField('Getting Started', 'Use !help to see what commands you can use to begin building your order!  If you know what you want you can just get started');
+    .addField('Getting Started', 'Use !help to see what commands you can use to begin building your order!  If you know what you want you can just get started')
     .setColor(0x00ae86)
     .setThumbnail(
       'https://corporate.dominos.co.uk/Media/Default/Image%20Library/Image%20library%20-%20logos/RGB_White_Type_Tile_Only.png',
