@@ -108,7 +108,7 @@ function createEmbed(stats, team) {
   });
   embed
     .addBlankField()
-    .addField('Average SR', `${sum / count || 'Unknown'}`)
+    .addField('Average SR', `${Math.round(sum / count) || 'Unknown'}`)
     .setTimestamp();
 
   return embed;
