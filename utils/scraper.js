@@ -59,7 +59,7 @@ async function getRosters(team, round) {
     delete matchData.selector;
     return matchData;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 }
 

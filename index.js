@@ -23,10 +23,10 @@ client.on('message', async message => {
   if (message.author === client.user) {
     return;
   }
-  if (message.content === '!pizza' && message.channel.type === 'dm') {
+  else if (message.content === '!pizza' && message.channel.type === 'dm') {
     startPizzaOrder(message.author, message.channel);
   }
-  if (message.content.startsWith('!OD settings')) {
+  else if (message.content.startsWith('!OD settings')) {
     const embed = new Discord.RichEmbed()
       .setColor(0x00ae86)
       .setThumbnail(
@@ -39,7 +39,7 @@ client.on('message', async message => {
       .setFooter('Message @Landis#0870 with any questions or issues');
     message.channel.send({ embed });
   }
-  if (message.content.startsWith('!OD maps')) {
+  else if (message.content.startsWith('!OD maps')) {
     const embed = new Discord.RichEmbed()
       .setTitle('Open Division Season 2 Map Pool')
       .setColor(0x00ae86)
@@ -57,7 +57,7 @@ client.on('message', async message => {
       );
     message.channel.send({ embed });
   }
-  if (
+  else if (
     message.content.startsWith('!OD matchup') &&
     checkMessageCategory(message)
   ) {
