@@ -88,6 +88,13 @@ function checkMessageCategory(message) {
 function createEmbed(stats, team) {
   let sum = 0;
   let count = 0;
+  const sortedRoster = stats.roster.sort((a, b) => {
+    const ratingA = parseInt(a.rating) || 0;
+    const ratingB = parseInt(b.rating) || 0;
+    console.log(ratingA);
+    console.log(ratingB);
+    return ratingB - ratingA;
+  });
   const embed = new Discord.RichEmbed()
     .setTitle(`${team} match #${stats.round} vs. ${stats.name}`)
     .setDescription(`Match schedueled for ${stats.date}`)
@@ -96,7 +103,7 @@ function createEmbed(stats, team) {
       'https://cdn.discordapp.com/attachments/546536122407190530/546536510309269514/artboard_1.png',
     )
     .setFooter('Message @Landis#0870 with any questions or issues');
-  stats.roster.forEach(player => {
+  sortedRoster.forEach(player => {
     if (parseInt(player.rating)) {
       sum += parseInt(player.rating);
       count += 1;
